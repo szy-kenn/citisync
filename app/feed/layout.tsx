@@ -1,5 +1,6 @@
 import { TopBar } from "./components/top-bar"
 import BottomBar  from "./components/bottom-bar"
+import { Toaster } from "sonner"
 
 export default function Layout({ children } : { children: React.ReactNode }) {
     return (
@@ -9,6 +10,7 @@ export default function Layout({ children } : { children: React.ReactNode }) {
                 {children}
             </div>
             <BottomBar />
+            <Toaster />
         </div>
     )
 }
