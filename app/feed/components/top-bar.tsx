@@ -1,18 +1,32 @@
-
 'use client'
 
 import { useScrollAware } from '@/hooks/useScrollAware'
 import { BsSearch } from "react-icons/bs";
 import { MdOutlineTune } from "react-icons/md";
+import { useState, useEffect } from 'react';
 
 export function TopBar() {
   const isVisible = useScrollAware()
+  const [isScrolled, setIsScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    handleScroll() // Check initial scroll position
+
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 bg-white backdrop-blur-lg z-50 transition-transform duration-300 ease-in-out ${
-        isVisible ? 'translate-y-0' : '-translate-y-full'
-      }`}
+      className={`top-0 left-0 right-0 bg-white backdrop-blur-lg transition-all duration-300 ease-in-out
+        ${isScrolled 
+          ? `fixed z-50 ${isVisible ? 'translate-y-0' : '-translate-y-full'}`
+          : 'relative'
+        }`}
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
@@ -30,4 +44,3 @@ export function TopBar() {
     </header>
   )
 }
-
