@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react';
-import { auth } from '../../firebase/firebaseConfig';
+import { auth } from '../../../lib/firebase/firebaseConfig';
 import { useSignInWithGoogle, useAuthState, useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
