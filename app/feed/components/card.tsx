@@ -1,14 +1,16 @@
 import { Post } from "@/lib/types";
 import { Card } from "@/components/ui/card"
 import { MapPin, TriangleAlert } from 'lucide-react'
+import { formatTimestamp } from "@/lib/utils";
 
 
 
 interface PostCardProps {
   post: Post;
+  isShortened?: boolean;
 }
 
-export default function PostCard({ post }: PostCardProps) {
+export default function PostCard({ post, isShortened = false }: PostCardProps) {
 
     const initial_date = post.createdAt;
 
@@ -22,7 +24,7 @@ export default function PostCard({ post }: PostCardProps) {
           <div className="space-y-1">
             <div className="flex flex-col gap-1">
               <span className="font-medium">{post.user}</span>
-              <p className="text-xs">{initial_date}</p>
+              <p className="text-xs">{formatTimestamp(initial_date)}</p>
             </div>
           </div>
         </div>
@@ -32,7 +34,7 @@ export default function PostCard({ post }: PostCardProps) {
             </div>
       </div>
 
-        {post.image_url && (
+        {!isShortened && post.image_url && (
             <div className="relative h-52 w-full">
                 <img
                     src={post.image_url}

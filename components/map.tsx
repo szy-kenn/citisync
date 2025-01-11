@@ -70,7 +70,7 @@ const Map = ({ markers, selectedMarker, setSelectedMarker, showInfoWindow, setSh
           >
             <div className='flex gap-3 flex-col'>
                 {posts?.map((post: Post) => (
-                  <PostCard key={post.id} post={post} />
+                  <PostCard key={post.id} post={post} isShortened={true} />
                 ))}
             </div>
           </InfoWindow>
