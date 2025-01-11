@@ -1,15 +1,20 @@
 import { db } from "./firebaseConfig";
+import { Post } from "@/lib/types";
 import {addDoc, collection, doc, getDocs, setDoc } from "firebase/firestore";
 
-async function getAllPosts() {
+
+export async function getAllPosts() {
     try {
         const postsCollection = collection(db, 'Posts');  // Get a reference to the 'Posts' collection
         const snapshot = await getDocs(postsCollection);  // Get all documents in the collection
 
         const posts = snapshot.docs.map(doc => ({
+
             id: doc.id,
+
             ...doc.data()  // Spread the document data
-        }));
+
+        } as Post))
 
         return posts;
 
@@ -19,7 +24,7 @@ async function getAllPosts() {
 };
 
 // Function to add a new post to Firestore
-async function addPost(postData: any) {
+export async function addPost(postData: any) {
     try {
         // Get a reference to the 'Posts' collection
         const postsCollection = collection(db, 'Posts');
