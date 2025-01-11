@@ -1,5 +1,4 @@
 'use client';
-import { Input } from "@/components/ui/input";
 import { createClient } from "@supabase/supabase-js";
 import { useState } from "react";
 
@@ -34,11 +33,7 @@ export default function Login() {
 
     return (
         <div className="flex flex-col gap-2">
-            <h1>Log In</h1>
-            {/* <form>
-                <Input placeholder="Email or Phone Number"></Input>
-                <Input placeholder="Enter your Password"></Input>
-            </form> */}
+            <h1>Image Upload</h1>
             <input type="file" onChange={(e) => handleFileChange(e)} />
             <button onClick={uploadFile}>submit</button>
         </div>
