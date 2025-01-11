@@ -14,7 +14,7 @@ export default function Page() {
       </div>
 
       <div className="absolute right-8 bottom-20 bg-white rounded-[999px] flex gap-1 w-fit h-fit p-2 pl-4 justify-center items-center" 
-          onClick={() => redirect("/feed")}>
+          onClick={() => redirect("/feed/resolved")}>
         <p className="text-[#0061a8] font-bold">Get Started</p>
         <PiCaretLeftBold className='h-6 w-6 rotate-180 text-[#0061a8]' />
       </div>

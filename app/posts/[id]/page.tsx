@@ -5,6 +5,10 @@ import { formatTimestamp, MarkerType } from "@/lib/utils";
 import React from 'react'
 import Map from '@/components/map';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { PiCaretLeftBold } from 'react-icons/pi';
+import { Separator } from '@/components/ui/separator';
+import { useRouter } from 'next/router';
+import BackButton from '@/components/back-button';
 
 const Post = async ({ params }: {params: {id: string}}) => {
 
@@ -18,9 +22,14 @@ const Post = async ({ params }: {params: {id: string}}) => {
     { id: 1, position: { lat: 14.5995, lng: 120.9842}, title: 'Manila' },
   ];
 
-
     return (
         <div className="p-4 space-y-4">
+            <div className='flex gap-2 justify-between'>
+                <BackButton />
+                <p className='font-bold'>View Report</p>
+                <PiCaretLeftBold className='h-6 w-6 opacity-0' />
+            </div>
+          <Separator />
           <div className="flex items-start justify-between">
             <div className="flex items-center gap-4">
               <div className="relative h-10 w-10">
@@ -68,7 +77,10 @@ const Post = async ({ params }: {params: {id: string}}) => {
               <span>{post.location}</span>
             </div>
           </div>
-          <Map markers={markers} />
+          <div className='pt-2'>
+            <p className='font-bold'>Location</p>
+            <Map markers={markers} />
+          </div>
           <div className='flex flex-col'>
             <p className='font-bold'>Feedback</p>
             <div>
@@ -79,7 +91,6 @@ const Post = async ({ params }: {params: {id: string}}) => {
                                 <AvatarFallback>AN</AvatarFallback>
                             </Avatar>
                             <p className="font-semibold text-sm">{feedback.user_id}</p>
-                            <p>•</p>
                         </div>
                         <p className='text-sm'>{feedback.content}</p>
                     </Card>
