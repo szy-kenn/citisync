@@ -2,7 +2,7 @@
 
 // components/Map.js
 import React, { useEffect, useState } from 'react';
-import { GoogleMap, InfoWindow, LoadScript, Marker } from '@react-google-maps/api';
+import { GoogleMap, InfoWindow, LoadScript, Marker, Polygon } from '@react-google-maps/api';
 import { MarkerType } from '@/lib/utils';
 
 const containerStyle = {
@@ -11,8 +11,8 @@ const containerStyle = {
 };
 
 const defaultCenter = {
-  lat: 40.7128, // New York City Latitude
-  lng: -74.0060, // New York City Longitude
+  lat: 14.5995, // Manila Latitude
+  lng: 120.9842, // Manila Longitude
 };
 
 const Map = ({ markers, selectedMarker, setSelectedMarker, showInfoWindow, setShowInfoWindow } 
@@ -23,6 +23,7 @@ const Map = ({ markers, selectedMarker, setSelectedMarker, showInfoWindow, setSh
     showInfoWindow: boolean,
     setShowInfoWindow: React.Dispatch<React.SetStateAction<boolean>>,
     }) => {
+
   const [isLoaded, setIsLoaded] = useState(false);
 
   const handleLoad = () => {
@@ -50,7 +51,7 @@ const Map = ({ markers, selectedMarker, setSelectedMarker, showInfoWindow, setSh
             key={marker.id}
             position={marker.position}
             title={marker.title}
-            icon={'/Facebook.svg'}
+            icon={'/images/category-icons/pin.svg'}
             onClick={() => handleMarkerClick(marker)}
           />
         ))}
