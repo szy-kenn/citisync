@@ -1,11 +1,10 @@
-import { getResolvedPosts } from "../../lib/firebase/posts";
-import { Post } from "../../lib/types";
-import PostCard from "./components/card";
+import { getUnresolvedPosts } from "@/lib/firebase/posts";
+import { Post } from "@/lib/types";
+import PostCard from "../components/card";
 
-
-export default async function Feed() {
+export default async function ResolvedPost() {
   
-  const posts = await getResolvedPosts();
+  const posts = await getUnresolvedPosts();
   console.log(posts);
 
   return (

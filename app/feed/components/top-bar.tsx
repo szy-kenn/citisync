@@ -1,13 +1,18 @@
 'use client'
-
 import { useScrollAware } from '@/hooks/useScrollAware'
 import { BsSearch } from "react-icons/bs";
 import { MdOutlineTune } from "react-icons/md";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { usePathname } from 'next/navigation';
+import Status from './status';
 
 export function TopBar() {
   const isVisible = useScrollAware()
   const [isScrolled, setIsScrolled] = useState(false)
+  const status = usePathname().split('/feed/')[1]
+  const [isStatusOpen, setIsStatusOpen] = useState(false)
+  const statusRef = useRef<HTMLDivElement>(null)
+  const buttonRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,10 +20,31 @@ export function TopBar() {
     }
 
     window.addEventListener('scroll', handleScroll)
-    handleScroll() // Check initial scroll position
+    handleScroll()
 
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        isStatusOpen &&
+        statusRef.current &&
+        buttonRef.current &&
+        !statusRef.current.contains(event.target as Node) &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
+        setIsStatusOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [isStatusOpen])
+
+  const handleSettingsClick = () => {
+    setIsStatusOpen(!isStatusOpen)
+  }
 
   return (
     <header
@@ -36,8 +62,15 @@ export function TopBar() {
             </div>
           </div>
           <div className="flex items-center space-x-4">
-                <BsSearch className="text-xl" />
-                <MdOutlineTune className="text-2xl" />
+            <BsSearch className="text-xl" />
+            <div className='relative'>
+              <div ref={buttonRef}>
+                <MdOutlineTune className="text-2xl cursor-pointer" onClick={handleSettingsClick}/>
+              </div>
+              <div ref={statusRef}>
+                {isStatusOpen && <Status current_status={status} />}
+              </div>
+            </div>
           </div>
         </div>
       </div>
