@@ -9,11 +9,9 @@ export default function BottomBar() {
             <div className="flex justify-between items-center h-full text-2xl text-slate-400 gap-12">
                     <div className="flex flex-col items-center max-w-12">
                         <BsHouseDoor />
-                        <span className="text-xs">Home</span>
                     </div>
                     <div className="flex flex-col items-center max-w-12">
                         <BsBarChart />
-                        <span className="text-xs">Leaderboards</span>
                     </div>
 
                 <div className="w-fit">
@@ -27,11 +25,9 @@ export default function BottomBar() {
                 </div>
                     <div className="flex flex-col items-center max-w-12">
                         <HiOutlineHand />
-                        <span className="text-xs">Proposal</span>
                     </div>
                     <div className="flex flex-col items-center max-w-12">
                         <HiScale />
-                        <span className="text-xs">Debate</span>
                     </div>
             </div>
         </div>
