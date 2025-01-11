@@ -1,6 +1,7 @@
 import { db } from "./firebaseConfig";
 import { Post } from "@/lib/types";
-import {addDoc, collection, doc, getDoc, getDocs, setDoc, query, where } from "firebase/firestore";
+import {addDoc, collection, doc, getDoc, getDocs, setDoc, query, where, serverTimestamp } from "firebase/firestore";
+import { Proposal } from "@/lib/types";
 
 
 export async function getAllPosts() {
@@ -104,3 +105,71 @@ async function updatePost(userId: string, postId: string, updatedData: any) {
         console.error("[updatePost() error]:", error);
     }
 }
+
+interface ProposalData {
+    title: string
+    content: string
+  }
+  
+  interface ProposalSubmissionResult {
+    success: boolean
+    error?: string
+    proposalId?: string
+  }
+  
+export async function submitProposal(
+  data: ProposalData,
+  currentUser: any | null,
+  username: string | null
+): Promise<ProposalSubmissionResult> {
+  if (!currentUser) {
+    return {
+      success: false,
+      error: 'User must be authenticated to submit a proposal'
+    }
+  }
+
+  try {
+    const proposalData = {
+      ...data,
+      authorId: currentUser.uid,
+      author: username,
+      initialVotes: 0,
+      createdAt: Date.now(),
+      initialComments: []
+    }
+
+    const proposalRef = await addDoc(
+      collection(db, 'proposals'),
+      proposalData
+    )
+
+    return {
+      success: true,
+      proposalId: proposalRef.id
+    }
+  } catch (error) {
+    console.error('Error submitting proposal:', error)
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'An unknown error occurred'
+    }
+  }
+}
+
+export async function getProposals() {
+  try {
+    const querySnapshot = await getDocs(collection(db, 'proposals'))
+
+    const proposals = querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }))
+
+    return proposals as Proposal[]
+  } catch (error) {
+    console.error('Error getting proposals:', error)
+    return []
+  }
+}
+

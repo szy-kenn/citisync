@@ -20,3 +20,20 @@ export interface feedback {
     content: string;
     user_id: string;
 }
+
+export interface Comment {
+    id: number
+    author: string
+    content: string
+    timestamp: string
+}
+
+export interface Proposal {
+    id: string
+    title: string
+    content: string
+    author: string
+    createdAt: Date
+    initialVotes: number
+    initialComments: Comment[]
+  }
