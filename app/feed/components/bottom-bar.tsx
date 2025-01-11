@@ -13,7 +13,7 @@ export default function BottomBar() {
     return (
         <div className="fixed bottom-0 left-0 w-full h-14 bg-white px-12">
             <div className="flex justify-between items-center h-full text-2xl text-slate-400 gap-12">
-                <Link href={"/feed/resolved"}>
+                <Link href={"/feed"}>
                     <BsHouseDoor />
                 </Link>
                 <Link href={"/leaderboards"}>

@@ -1,10 +1,19 @@
-import { redirect } from 'next/navigation'
-import React from 'react'
+import { getAllPosts } from "@/lib/firebase/posts";
+import { Post } from "@/lib/types";
+import PostCard from "./components/card";
 
-const Page = () => {
+export default async function ResolvedPost() {
+  
+  const posts = await getAllPosts();
+  console.log(posts);
 
-    return redirect("/feed/resolved")
-
+  return (
+    <div className="">
+      <div className="flex flex-col gap-3 px-5 mt-4">
+        {posts?.map((post: Post) => (
+          <PostCard key={post.id} post={post} />
+        ))}
+      </div>
+    </div>
+  )
 }
-
-export default Page

@@ -66,7 +66,7 @@ export const AuthProvider = ({
             setSession();
 
             if (user && isAuthRoute) {
-                router.replace('/feed/resolved');
+                router.replace('/feed');
                 return;
             }
 

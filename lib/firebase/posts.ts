@@ -1,8 +1,8 @@
 import { db } from "./firebaseConfig";
 import { Post } from "@/lib/types";
 import {addDoc, collection, doc, getDoc, getDocs, setDoc, query, where, serverTimestamp } from "firebase/firestore";
-import { Proposal } from "@/lib/types";
-
+import { Proposal } from "@/lib/types"; 
+import { formatTimestamp } from "../utils";
 
 export async function getAllPosts() {
     try {
@@ -11,7 +11,8 @@ export async function getAllPosts() {
 
         const posts = snapshot.docs.map(doc => ({
             ...doc.data(),  // Spread the document data
-            id: doc.id
+            id: doc.id,
+            createdAt: doc.data().createdAt.toDate().toLocaleDateString(),
         } as Post))
 
         return posts;

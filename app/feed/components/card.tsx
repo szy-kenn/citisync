@@ -27,7 +27,7 @@ export default function PostCard({ post, isShortened = false }: PostCardProps) {
           <div className="space-y-1">
             <div className="flex flex-col gap-1">
               <span className="font-medium">{post.user}</span>
-              <p className="text-xs">{formatTimestamp(initial_date)}</p>
+              <p className="text-xs">{initial_date}</p>
             </div>
           </div>
         </div>

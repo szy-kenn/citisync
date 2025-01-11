@@ -1,17 +1,12 @@
 'use client'
 import { useScrollAware } from '@/hooks/useScrollAware'
 import { BsSearch } from "react-icons/bs";
-import { MdOutlineTune } from "react-icons/md";
 import { useState, useEffect, useRef } from 'react';
-import { usePathname } from 'next/navigation';
-import Status from './status';
-import { stat } from 'fs';
+
 
 export function TopBar() {
   const isVisible = useScrollAware()
   const [isScrolled, setIsScrolled] = useState(false)
-  const status = usePathname().split('/feed/')[1]
-  const status_display = status.charAt(0).toUpperCase() + status.slice(1)
   const [isStatusOpen, setIsStatusOpen] = useState(false)
   const statusRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLDivElement>(null)
@@ -44,10 +39,6 @@ export function TopBar() {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [isStatusOpen])
 
-  const handleSettingsClick = () => {
-    setIsStatusOpen(!isStatusOpen)
-  }
-
   return (
     <header
       className={`top-0 left-0 right-0 bg-white backdrop-blur-lg transition-all duration-300 ease-in-out
@@ -64,18 +55,10 @@ export function TopBar() {
             </div>
           </div>
           <div>
-            <h1 className="text-lg font-bold">{status_display}</h1>
+            <h1 className="text-lg font-bold">{status}</h1>
           </div>
           <div className="flex items-center space-x-4">
             <BsSearch className="text-xl" />
-            <div className='relative'>
-              <div ref={buttonRef}>
-                <MdOutlineTune className="text-2xl cursor-pointer" onClick={handleSettingsClick}/>
-              </div>
-              <div ref={statusRef}>
-                {isStatusOpen && <Status current_status={status} />}
-              </div>
-            </div>
           </div>
         </div>
       </div>

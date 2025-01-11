@@ -6,7 +6,7 @@ export interface Post {
     content: string;
     dislikes: number,
     likes: number;
-    createdAt: Timestamp;
+    createdAt: string;
     user: string;
     feedback: feedback[];
     image_url: string;
