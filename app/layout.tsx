@@ -73,7 +73,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.className} antialiased`}
+        className={`${poppins.className} antialiased bg-white-lilac`}
       // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <AuthProvider loadingComponent={<LoadingScreen />}>
