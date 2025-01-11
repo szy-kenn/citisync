@@ -2,6 +2,7 @@ import { Post } from "@/lib/types";
 import { Card } from "@/components/ui/card"
 import { MapPin, TriangleAlert } from 'lucide-react'
 import { formatTimestamp } from "@/lib/utils";
+import { redirect } from "next/navigation";
 
 
 
@@ -15,7 +16,7 @@ export default function PostCard({ post, isShortened = false }: PostCardProps) {
     const initial_date = post.createdAt;
 
   return (
-    <Card className="max-w-md p-4 space-y-4">
+    <Card className="max-w-md p-4 space-y-4" onClick={() => redirect(`/posts/${post.id}`)}>
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-4">
           <div className="relative h-10 w-10">

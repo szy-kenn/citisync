@@ -2,7 +2,7 @@ import { NextConfig } from 'next';
 import withPWA from '@ducanh2912/next-pwa';
 
 const config: NextConfig = {
-  output: "export",
+  // output: "export",
   distDir: "build",
   
   // Rewrites need to be inside the config object

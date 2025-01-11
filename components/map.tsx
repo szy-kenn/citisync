@@ -68,7 +68,7 @@ const Map = ({ markers, selectedMarker, setSelectedMarker, showInfoWindow, setSh
             position={selectedMarker.position}
             onCloseClick={() => setShowInfoWindow(false)} // Close the popup when clicking the close button
           >
-            <div className='flex gap-3 flex-col'>
+            <div className='flex gap-3 flex-col w-80'>
                 {posts?.map((post: Post) => (
                   <PostCard key={post.id} post={post} isShortened={true} />
                 ))}

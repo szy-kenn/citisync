@@ -1,6 +1,6 @@
 import { db } from "./firebaseConfig";
 import { Post } from "@/lib/types";
-import {addDoc, collection, doc, getDocs, setDoc } from "firebase/firestore";
+import {addDoc, collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
 
 
 export async function getAllPosts() {
@@ -9,11 +9,8 @@ export async function getAllPosts() {
         const snapshot = await getDocs(postsCollection);  // Get all documents in the collection
 
         const posts = snapshot.docs.map(doc => ({
-
-            id: doc.id,
-
-            ...doc.data()  // Spread the document data
-
+            ...doc.data(),  // Spread the document data
+            id: doc.id
         } as Post))
 
         return posts;
@@ -39,6 +36,22 @@ export async function addPost(postData: any) {
     }
 }
 
+export async function getPost(postId: string): Promise<Post | null> {
+    try {
+        const docRef = doc(db, 'Posts', postId);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+            return { id: docSnap.id, ...docSnap.data() };
+        } else {
+            console.log("No such document");
+            return null;
+        }
+    } catch (error) {
+        console.error("[getPost() error]:", error);  // Log the error
+        throw error;
+    }
+}
 // Function to update an existing post using setDoc (overwrite the entire document)
 async function updatePost(userId: string, postId: string, updatedData: any) {
     try {
