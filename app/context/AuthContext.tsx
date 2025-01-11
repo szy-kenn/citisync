@@ -13,23 +13,34 @@ interface AuthContextType {
 export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children } : { children: React.ReactNode}) => {
-
     const [user, loading, error] = useAuthState(auth);
     const router = useRouter();
 
     useEffect(() => {
-        if (!loading && !user) {
-            router.push('/auth/login');
+        const setSession = async () => {
+            if (user) {
+                const token = await user.getIdToken();
+                document.cookie = `session=${token}; path=/`;
+            } else {
+                document.cookie = 'session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+            }
+        };
+
+        if (!loading) {
+            setSession();
+            if (!user) router.replace('/auth/login');
         }
-    }, [loading, user]);
+    }, [user, loading]);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <AuthContext.Provider value={{ user, loading, error }}>
             {children}
         </AuthContext.Provider>
-    )
-
-
+    );
 }
 
 export const useAuth = () => {
