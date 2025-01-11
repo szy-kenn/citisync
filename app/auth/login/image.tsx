@@ -1,11 +1,10 @@
 'use client';
-import { createClient } from "@supabase/supabase-js";
+import { supabase } from "@/lib/supabase";
 import { useState } from "react";
 
 export default function Login() {
 
     const [file, setFile] = useState<File>();
-    const supabase = createClient("https://vsbkxysdsqapomfudqih.supabase.co", process.env.NEXT_PUBLIC_SUPABASE_ACCESS_KEY!)
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const selectedFile = event.target.files![0]
