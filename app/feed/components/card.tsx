@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import { Post } from "@/lib/types";
 import { Card } from "@/components/ui/card"
 import { MapPin, TriangleAlert } from 'lucide-react'
@@ -15,7 +15,9 @@ export default function PostCard({ post, isShortened = false }: PostCardProps) {
     const initial_date = post.createdAt;
 
   return (
-    <Card className="max-w-md p-4 space-y-4" onClick={() => redirect(`/posts/${post.id}`)}>
+    <Card className="max-w-md p-4 space-y-4 cursor-pointer transition-all duration-300 ease-in-out
+      hover:shadow-xl hover:-translate-y-1 hover:bg-gradient-to-br from-white to-gray-50
+      border border-gray-100 hover:border-gray-200" onClick={() => redirect(`/posts/${post.id}`)}>
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-4">
           <div className="relative h-10 w-10">

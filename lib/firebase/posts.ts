@@ -1,6 +1,6 @@
 import { db } from "./firebaseConfig";
 import { Post } from "@/lib/types";
-import {addDoc, collection, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
+import {addDoc, collection, doc, getDoc, getDocs, setDoc, query, where } from "firebase/firestore";
 
 
 export async function getAllPosts() {
@@ -52,6 +52,40 @@ export async function getPost(postId: string): Promise<Post | null> {
         throw error;
     }
 }
+
+export async function getResolvedPosts() {
+    try {
+        const postsCollectionRef = collection(db, "Posts"); 
+        const postsQuery = query(postsCollectionRef, where("isResolved", "==", true));
+
+        const snapshot = await getDocs(postsQuery);
+        const posts = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id } as Post));
+
+        return posts;
+    }
+    catch (error) {
+        console.error("[getResolvedPosts() error]:", error);
+        return [];
+    }
+}
+
+export async function getUnresolvedPosts() {
+    try {
+        const postsCollectionRef = collection(db, "Posts"); 
+        const postsQuery = query(postsCollectionRef, where("isResolved", "==", false));
+
+        const snapshot = await getDocs(postsQuery);
+        const posts = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id } as Post));
+
+        return posts;
+    }
+    catch (error) {
+        console.error("[getUnresolvedPosts() error]:", error);
+        return [];
+    }
+}
+
+
 // Function to update an existing post using setDoc (overwrite the entire document)
 async function updatePost(userId: string, postId: string, updatedData: any) {
     try {
