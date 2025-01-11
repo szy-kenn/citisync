@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card"
 import { MapPin, TriangleAlert } from 'lucide-react'
 import { formatTimestamp } from "@/lib/utils";
 import { redirect } from "next/navigation";
+import { LikeDislikeCounter } from "./like-dislike-counter";
 
 interface PostCardProps {
   post: Post;
@@ -50,11 +51,7 @@ export default function PostCard({ post, isShortened = false }: PostCardProps) {
       </div>
 
       <div className="flex items-center justify-between text-sm text-muted-foreground">
-        <div className="flex items-center gap-1 bg-slate-700 px-1 py-1 rounded-md text-white">
-            <img src="/like_filled.svg" alt="like" />
-            <span>{post.likes}</span>
-            <img src="/dislike.svg" alt="dislike" />
-        </div>
+        <LikeDislikeCounter initialLikes={post.likes} />
         <div className="flex items-center gap-1">
           <MapPin className="h-4 w-4" />
           <span>{post.location}</span>
