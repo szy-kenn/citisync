@@ -4,6 +4,9 @@
 import React, { useEffect, useState } from 'react';
 import { GoogleMap, InfoWindow, LoadScript, Marker, Polygon } from '@react-google-maps/api';
 import { MarkerType } from '@/lib/utils';
+import PostCard from '@/app/feed/components/card';
+import { getAllPosts } from '@/lib/firebase/posts';
+import { Post } from '@/lib/types';
 
 const containerStyle = {
   width: '100%',
@@ -25,14 +28,17 @@ const Map = ({ markers, selectedMarker, setSelectedMarker, showInfoWindow, setSh
     }) => {
 
   const [isLoaded, setIsLoaded] = useState(false);
+  const [posts, setPosts] = useState<Post[] | undefined>([]);
 
   const handleLoad = () => {
     setIsLoaded(true);
   };
 
-  const handleMarkerClick = (marker: MarkerType) => {
+  const handleMarkerClick = async (marker: MarkerType) => {
     setSelectedMarker(marker);
     setShowInfoWindow(true); // Show the popup when the marker is clicked
+    const posts = await getAllPosts();
+    setPosts(posts);
   };
 
   return (
@@ -62,9 +68,10 @@ const Map = ({ markers, selectedMarker, setSelectedMarker, showInfoWindow, setSh
             position={selectedMarker.position}
             onCloseClick={() => setShowInfoWindow(false)} // Close the popup when clicking the close button
           >
-            <div>
-              <h3>{selectedMarker.title}</h3>
-              <p>Some details about {selectedMarker.title}</p>
+            <div className='flex gap-3 flex-col w-80'>
+                {posts?.map((post: Post) => (
+                  <PostCard key={post.id} post={post} isShortened={true} />
+                ))}
             </div>
           </InfoWindow>
         )}
