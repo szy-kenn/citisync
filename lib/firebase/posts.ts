@@ -1,5 +1,5 @@
 import { db } from "./firebaseConfig";
-import {addDoc, collection, getDocs } from "firebase/firestore";
+import {addDoc, collection, doc, getDocs, setDoc } from "firebase/firestore";
 
 async function getAllPosts() {
     try {
@@ -31,5 +31,24 @@ async function addPost(postData: any) {
         return { id: docRef.id, ...postData };  // Return the added post data along with the generated ID
     } catch (error) {
         console.error("[addPost() error]:", error);  // Log the error
+    }
+}
+
+// Function to update an existing post using setDoc (overwrite the entire document)
+async function updatePost(userId: string, postId: string, updatedData: any) {
+    try {
+
+        const userRef = doc(db, 'Posts', userId);
+
+        // Get a reference to the document you want to update (replace the whole document)
+        const docRef = doc(db, 'Posts', postId);
+
+        // Replace the entire document with the new data
+        await setDoc(docRef, updatedData);
+
+        console.log("Document updated with ID: ", postId);
+        return { id: postId, ...updatedData };  // Return the updated data
+    } catch (error) {
+        console.error("[updatePost() error]:", error);
     }
 }
