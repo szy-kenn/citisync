@@ -1,7 +1,7 @@
 import { Post } from "@/lib/types";
 import { Card } from "@/components/ui/card"
-import { ThumbsUp, MapPin, ThumbsDown, TriangleAlert } from 'lucide-react'
-import Image from "next/image"
+import { MapPin, TriangleAlert } from 'lucide-react'
+
 
 
 interface PostCardProps {
@@ -9,6 +9,9 @@ interface PostCardProps {
 }
 
 export default function PostCard({ post }: PostCardProps) {
+
+    const initial_date = post.createdAt;
+
   return (
     <Card className="max-w-md p-4 space-y-4">
       <div className="flex items-start justify-between">
@@ -19,22 +22,25 @@ export default function PostCard({ post }: PostCardProps) {
           <div className="space-y-1">
             <div className="flex flex-col gap-1">
               <span className="font-medium">{post.user}</span>
-              <div className="flex bg-red text-white justify-center items-center rounded-md px-4 py-1 text-sm gap-1">
-                <TriangleAlert className="h-4 w-4" />
-                {post.category}
-              </div>
+              <p className="text-xs">{initial_date}</p>
             </div>
           </div>
         </div>
-        <div
-            className={`font-normal mr-1 rounded-md px-2 py-1 text-sm text-white ${
-                post.isResolved ? "bg-green-500" : "bg-red"
-            }`}
-            >
-            {post.isResolved ? "Resolved" : "Unresolved"}
-        </div>
+            <div className="flex bg-red text-white justify-center items-center rounded-md px-4 py-1 text-sm gap-1">
+                <TriangleAlert className="h-4 w-4" />
+                {post.category}
+            </div>
       </div>
 
+        {post.image_url && (
+            <div className="relative h-52 w-full">
+                <img
+                    src={post.image_url}
+                    className="rounded-md"
+                    alt="image_url"
+                />
+            </div>
+        )}
       <div className="space-y-1">
         <p className="font-medium">
           {post.title}
@@ -42,10 +48,10 @@ export default function PostCard({ post }: PostCardProps) {
       </div>
 
       <div className="flex items-center justify-between text-sm text-muted-foreground">
-        <div className="flex items-center gap-1">
-          <ThumbsUp className="h-4 w-4" />
-          <span>{post.likes}</span>
-          <ThumbsDown className="h-4 w-4" />
+        <div className="flex items-center gap-1 bg-slate-700 px-1 py-1 rounded-md text-white">
+            <img src="/like_filled.svg" alt="like" />
+            <span>{post.likes}</span>
+            <img src="/dislike.svg" alt="dislike" />
         </div>
         <div className="flex items-center gap-1">
           <MapPin className="h-4 w-4" />
