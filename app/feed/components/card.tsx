@@ -1,10 +1,9 @@
+"use client";
 import { Post } from "@/lib/types";
 import { Card } from "@/components/ui/card"
 import { MapPin, TriangleAlert } from 'lucide-react'
 import { formatTimestamp } from "@/lib/utils";
 import { redirect } from "next/navigation";
-
-
 
 interface PostCardProps {
   post: Post;

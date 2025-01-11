@@ -10,7 +10,7 @@ import { Post } from '@/lib/types';
 
 const containerStyle = {
   width: '100%',
-  height: '1000px',
+  height: '300px',
 };
 
 const defaultCenter = {
@@ -18,14 +18,14 @@ const defaultCenter = {
   lng: 120.9842, // Manila Longitude
 };
 
-const Map = ({ markers, selectedMarker, setSelectedMarker, showInfoWindow, setShowInfoWindow } 
+const Map = ({ markers } 
   : {
     markers: MarkerType[], 
-    selectedMarker: MarkerType | undefined, 
-    setSelectedMarker: React.Dispatch<React.SetStateAction<MarkerType | undefined>>,
-    showInfoWindow: boolean,
-    setShowInfoWindow: React.Dispatch<React.SetStateAction<boolean>>,
     }) => {
+
+      
+  const [selectedMarker, setSelectedMarker] = useState<MarkerType>(); // State to store selected marker
+  const [showInfoWindow, setShowInfoWindow] = useState<boolean>(false); // State to control popup visibility
 
   const [isLoaded, setIsLoaded] = useState(false);
   const [posts, setPosts] = useState<Post[] | undefined>([]);
@@ -50,7 +50,7 @@ const Map = ({ markers, selectedMarker, setSelectedMarker, showInfoWindow, setSh
         <GoogleMap
           mapContainerStyle={containerStyle}
           center={defaultCenter}
-          zoom={10}
+          zoom={12}
         >
         {markers.map((marker) => (
           <Marker
