@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Poppins } from "next/font/google";
+import LoadingScreen from "@/components/ui/loading-screen";
 import { AuthProvider } from './context/AuthContext';
 
 import "./globals.css";
@@ -75,7 +76,7 @@ export default function RootLayout({
         className={`${poppins.className} antialiased`}
       // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AuthProvider>
+        <AuthProvider loadingComponent={<LoadingScreen />}>
           {children}
         </AuthProvider>
       </body>
