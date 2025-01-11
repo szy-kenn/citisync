@@ -49,13 +49,13 @@ export default function Login() {
     return (
         <div className="mt-32 min-h-screen px-10">
             <div className="flex flex-col gap-4">
-                <h1 className="text-2xl">Log In</h1>
+                <h1 className="text-2xl text-blue-dark">Log In</h1>
                 <Input placeholder="Email or Phone Number" />
                 <Input placeholder="Enter your Password" type="password" />
                 <span className="text-slate-500 flex justify-end text-sm cursor-pointer">
                     Forgot Password?
                 </span>
-                <button className="bg-primary text-white h-12 rounded-xl mt-2">
+                <button className="text-white h-12 rounded-xl mt-2 bg-blue">
                     Log In
                 </button>
             </div>
@@ -90,7 +90,7 @@ export default function Login() {
             <div>
                 <p className="text-center mt-8 text-slate-500 text-sm">
                     Don't have an account? 
-                    <span className="text-primary cursor-pointer underline ml-1">
+                    <span className="text-blue-dark cursor-pointer underline ml-1">
                         Sign Up
                     </span>
                 </p>
