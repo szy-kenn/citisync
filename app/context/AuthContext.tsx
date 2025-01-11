@@ -52,14 +52,16 @@ export const AuthProvider = ({
             }
         }
 
-        const publicRoutes = ['/auth/login', '/auth/signup']
+        const publicRoutes = ['/auth/login', '/auth/signup', '/']
+        const authRoutes = ['/auth/login', '/auth/signup']
         const isPublicRoute = publicRoutes.includes(pathname)
+        const isAuthRoute = authRoutes.includes(pathname)
 
         if (!loading) {
             setSession()
             
-            if (user && isPublicRoute) {
-                router.replace('/')
+            if (user && isAuthRoute) {
+                router.replace('/feed')
                 return
             }
             
@@ -76,7 +78,7 @@ export const AuthProvider = ({
     }
 
     // Don't render children until we're sure they should see the content
-    const publicRoutes = ['/auth/login', '/auth/signup']
+    const publicRoutes = ['/auth/login', '/auth/signup', '/']
     const isPublicRoute = publicRoutes.includes(pathname)
 
     if (!user && !isPublicRoute) {

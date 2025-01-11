@@ -17,8 +17,13 @@ export default function Login() {
     const [signInWithApple, appleUser, appleLoading, appleError] = useSignInWithApple(auth);
 
     useEffect(() => {
+<<<<<<< HEAD
         if (googleUser || facebookUser || appleUser) {
             router.push('/');
+=======
+        if (googleUser || facebookUser || appleUser || user) {
+            router.push('/feed');
+>>>>>>> e0f7ec9d93010e2638c6cfb6b727709d0a543f11
         }
     }, [googleUser, facebookUser, appleUser]);
 

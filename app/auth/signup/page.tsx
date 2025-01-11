@@ -25,7 +25,7 @@ export default function SignIn() {
 
     useEffect(() => {
         if (googleUser || facebookUser || appleUser || user) {
-            router.push('/');
+            router.push('/feed');
         }
     }, [googleUser, facebookUser, appleUser]);
 
