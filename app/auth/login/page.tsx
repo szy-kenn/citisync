@@ -1,29 +1,29 @@
 'use client';
 import { Input } from "@/components/ui/input";
 import { SectionDivider } from "@/components/ui/section-divider";
-import { useSignInWithGoogle, useSignInWithApple, useSignInWithFacebook, useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { useSignInWithGoogle, useSignInWithApple, useSignInWithFacebook } from "react-firebase-hooks/auth";
 import { auth } from "@/lib/firebase/firebaseConfig";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { useEffect } from "react";
 import Image from "next/image";
 import Apple from '@/public/Apple.svg';
 import Facebook from '@/public/Facebook.svg';
-import Google from '@/public/gmail.svg';
+import Google from '@/public/gmail.svg'; 
 
 export default function Login() {
     const router = useRouter();
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
     const [signInWithFacebook, facebookUser, facebookLoading, facebookError] = useSignInWithFacebook(auth);
     const [signInWithApple, appleUser, appleLoading, appleError] = useSignInWithApple(auth);
-    const [signInWithEmailAndPassword, user] = useSignInWithEmailAndPassword(auth);
 
     useEffect(() => {
+<<<<<<< HEAD
+        if (googleUser || facebookUser || appleUser) {
+            router.push('/');
+=======
         if (googleUser || facebookUser || appleUser || user) {
             router.push('/feed');
+>>>>>>> e0f7ec9d93010e2638c6cfb6b727709d0a543f11
         }
     }, [googleUser, facebookUser, appleUser]);
 
@@ -55,14 +55,14 @@ export default function Login() {
         <div className="mt-32 min-h-screen px-10">
             <div className="flex flex-col gap-4">
                 <h1 className="text-2xl text-blue-dark">Log In</h1>
-                <Input placeholder="Email or Phone Number" value={email} onChange={(e) => setEmail(e.target.value)} />
-                <Input placeholder="Enter your Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                <Input placeholder="Email or Phone Number" />
+                <Input placeholder="Enter your Password" type="password" />
                 <span className="text-slate-500 flex justify-end text-sm cursor-pointer">
                     Forgot Password?
                 </span>
-                <Button className="text-white h-12 rounded-xl mt-2 bg-blue" onClick={() => signInWithEmailAndPassword(email, password)}>
+                <button className="text-white h-12 rounded-xl mt-2 bg-blue">
                     Log In
-                </Button>
+                </button>
             </div>
 
             <SectionDivider text="or" className="mt-8" />
@@ -95,11 +95,9 @@ export default function Login() {
             <div>
                 <p className="text-center mt-8 text-slate-500 text-sm">
                     Don't have an account? 
-                    <Link href={"/auth/signup"}>
-                        <span className="text-blue-dark cursor-pointer underline ml-1">
-                            Sign Up
-                        </span>
-                    </Link>
+                    <span className="text-blue-dark cursor-pointer underline ml-1">
+                        Sign Up
+                    </span>
                 </p>
             </div>
         </div>
