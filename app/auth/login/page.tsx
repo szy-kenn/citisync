@@ -1,11 +1,11 @@
 'use client';
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { SectionDivider } from "@/components/ui/section-divider";
-import { useSignInWithGoogle, useSignInWithApple, useSignInWithFacebook } from "react-firebase-hooks/auth";
+import { useSignInWithGoogle, useSignInWithApple, useSignInWithFacebook, useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "@/lib/firebase/firebaseConfig";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import Apple from '@/public/Apple.svg';
@@ -14,12 +14,15 @@ import Google from '@/public/gmail.svg';
 
 export default function Login() {
     const router = useRouter();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [signInWithGoogle, googleUser, googleLoading, googleError] = useSignInWithGoogle(auth);
     const [signInWithFacebook, facebookUser, facebookLoading, facebookError] = useSignInWithFacebook(auth);
     const [signInWithApple, appleUser, appleLoading, appleError] = useSignInWithApple(auth);
+    const [signInWithEmailAndPassword, user] = useSignInWithEmailAndPassword(auth);
 
     useEffect(() => {
-        if (googleUser || facebookUser || appleUser) {
+        if (googleUser || facebookUser || appleUser || user) {
             router.push('/');
         }
     }, [googleUser, facebookUser, appleUser]);
@@ -52,12 +55,12 @@ export default function Login() {
         <div className="mt-32 min-h-screen px-10">
             <div className="flex flex-col gap-4">
                 <h1 className="text-2xl text-blue-dark">Log In</h1>
-                <Input placeholder="Email or Phone Number" />
-                <Input placeholder="Enter your Password" type="password" />
+                <Input placeholder="Email or Phone Number" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <Input placeholder="Enter your Password" type="password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                 <span className="text-slate-500 flex justify-end text-sm cursor-pointer">
                     Forgot Password?
                 </span>
-                <Button className="text-white h-12 rounded-xl mt-2 bg-blue">
+                <Button className="text-white h-12 rounded-xl mt-2 bg-blue" onClick={() => signInWithEmailAndPassword(email, password)}>
                     Log In
                 </Button>
             </div>
@@ -92,7 +95,7 @@ export default function Login() {
             <div>
                 <p className="text-center mt-8 text-slate-500 text-sm">
                     Don't have an account? 
-                    <Link href={'/auth/signup'}>
+                    <Link href={"/auth/signup"}>
                         <span className="text-blue-dark cursor-pointer underline ml-1">
                             Sign Up
                         </span>
