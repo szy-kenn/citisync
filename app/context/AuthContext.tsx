@@ -1,52 +1,99 @@
 'use client'
 import { useAuthState } from "react-firebase-hooks/auth"
-import { auth } from "@/lib/firebase/firebaseConfig"
-import { createContext, useContext, useEffect } from 'react';
-import { useRouter } from "next/navigation";
+import { doc, setDoc, getDoc } from "firebase/firestore"; 
+import { auth, db } from "@/lib/firebase/firebaseConfig"
+import { createContext, useContext, useEffect, ReactNode } from 'react'
+import { useRouter, usePathname } from "next/navigation"
+import { generateUsername } from "unique-username-generator";
 
 interface AuthContextType {
-    user: any;
-    loading: boolean;
-    error: Error | undefined;
+    user: any
+    loading: boolean
+    error: Error | undefined
 }
 
-export const AuthContext = createContext<AuthContextType | null>(null);
+export const AuthContext = createContext<AuthContextType | null>(null)
 
-export const AuthProvider = ({ children } : { children: React.ReactNode}) => {
-    const [user, loading, error] = useAuthState(auth);
-    const router = useRouter();
+interface AuthGuardProps {
+    children: ReactNode
+    loadingComponent?: ReactNode
+}
+
+export const AuthProvider = ({ 
+    children, 
+    loadingComponent = <div>Loading...</div> 
+}: AuthGuardProps) => {
+    const [user, loading, error] = useAuthState(auth)
+    const router = useRouter()
+    const pathname = usePathname()
 
     useEffect(() => {
         const setSession = async () => {
             if (user) {
-                const token = await user.getIdToken();
-                document.cookie = `session=${token}; path=/`;
+                const username = generateUsername()
+
+                //check if user already exists in Firestore
+                const userRef = doc(db, 'users', user.uid)
+                const userDoc = await getDoc(userRef)
+
+                //if user does not exist, create a new user document  
+                if (!userDoc.exists()) {
+                    await setDoc(doc(db, 'users', user.uid), {
+                        username,
+                        email: user.email,
+                        createdAt: new Date()
+                    })
+                }
+               
+                const token = await user.getIdToken()
+                document.cookie = `session=${token}; path=/`
             } else {
-                document.cookie = 'session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+                document.cookie = 'session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
             }
-        };
+        }
+
+        const publicRoutes = ['/auth/login', '/auth/signup']
+        const isPublicRoute = publicRoutes.includes(pathname)
 
         if (!loading) {
-            setSession();
-            if (!user) router.replace('/auth/login');
+            setSession()
+            
+            if (user && isPublicRoute) {
+                router.replace('/')
+                return
+            }
+            
+            if (!user && !isPublicRoute) {
+                router.replace('/auth/login')
+                return
+            }
         }
-    }, [user, loading]);
+    }, [user, loading, pathname])
 
+    // Show loading state until we're sure about authentication
     if (loading) {
-        return <div>Loading...</div>;
+        return <>{loadingComponent}</>
+    }
+
+    // Don't render children until we're sure they should see the content
+    const publicRoutes = ['/auth/login', '/auth/signup']
+    const isPublicRoute = publicRoutes.includes(pathname)
+
+    if (!user && !isPublicRoute) {
+        return <>{loadingComponent}</>
     }
 
     return (
         <AuthContext.Provider value={{ user, loading, error }}>
             {children}
         </AuthContext.Provider>
-    );
+    )
 }
 
 export const useAuth = () => {
-    const context = useContext(AuthContext);
+    const context = useContext(AuthContext)
     if (!context) {
-        throw new Error('useAuth must be used within an AuthProvider');
+        throw new Error('useAuth must be used within an AuthProvider')
     }
-    return context;
+    return context
 }
