@@ -42,12 +42,13 @@ const Map = ({ markers }
   };
 
   return (
-    <LoadScript
-      googleMapsApiKey={process.env.NEXT_PUBLIC_GMAPS_API_KEY!} // API Key from environment variables
-      onLoad={handleLoad}
-    >
+      <LoadScript
+        googleMapsApiKey={process.env.NEXT_PUBLIC_GMAPS_API_KEY!} // API Key from environment variables
+        onLoad={handleLoad}
+      >
       {isLoaded && (
         <GoogleMap
+        key={markers.toLocaleString()}
           mapContainerStyle={containerStyle}
           center={defaultCenter}
           zoom={12}
