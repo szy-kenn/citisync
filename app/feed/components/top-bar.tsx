@@ -5,11 +5,13 @@ import { MdOutlineTune } from "react-icons/md";
 import { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import Status from './status';
+import { stat } from 'fs';
 
 export function TopBar() {
   const isVisible = useScrollAware()
   const [isScrolled, setIsScrolled] = useState(false)
   const status = usePathname().split('/feed/')[1]
+  const status_display = status.charAt(0).toUpperCase() + status.slice(1)
   const [isStatusOpen, setIsStatusOpen] = useState(false)
   const statusRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLDivElement>(null)
@@ -60,6 +62,9 @@ export function TopBar() {
             <div className='flex items-center justify-center rounded-full bg-gray aspect-square h-10'>
                 D
             </div>
+          </div>
+          <div>
+            <h1 className="text-lg font-bold">{status_display}</h1>
           </div>
           <div className="flex items-center space-x-4">
             <BsSearch className="text-xl" />

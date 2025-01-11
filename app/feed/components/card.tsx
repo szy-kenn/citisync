@@ -37,13 +37,11 @@ export default function PostCard({ post, isShortened = false }: PostCardProps) {
       </div>
 
         {!isShortened && post.image_url && (
-            <div className="relative h-52 w-full">
                 <img
                     src={post.image_url}
                     className="rounded-md"
                     alt="image_url"
                 />
-            </div>
         )}
       <div className="space-y-1">
         <p className="font-medium">
