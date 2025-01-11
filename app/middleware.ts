@@ -1,6 +1,7 @@
 
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { auth } from '@/lib/firebase/firebaseConfig'
 
 export function middleware(request: NextRequest) {
     const path = request.nextUrl.pathname

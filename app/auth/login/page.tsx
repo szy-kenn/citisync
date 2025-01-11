@@ -23,7 +23,7 @@ export default function Login() {
 
     useEffect(() => {
         if (googleUser || facebookUser || appleUser || user) {
-            router.push('/');
+            router.push('/feed');
         }
     }, [googleUser, facebookUser, appleUser]);
 
