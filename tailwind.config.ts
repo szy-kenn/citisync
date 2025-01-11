@@ -49,7 +49,18 @@ export default {
   				'3': 'hsl(var(--chart-3))',
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
-  			}
+  			},
+			blue: 'var(--color-blue)',
+			yellow: 'var(--color-yellow)',
+			red: 'var(--color-red)',
+			gray: 'var(--color-gray)',
+			'white-lilac': 'var(--color-white-lilac)',
+			'blue-dark': 'var(--color-blue-dark)',
+			'blue-light': 'var(--color-blue-light)',
+			'yellow-dark': 'var(--color-yellow-dark)',
+			'yellow-light': 'var(--color-yellow-light)',
+			'red-dark': 'var(--color-red-dark)',
+			'red-light': 'var(--color-red-light)',
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
