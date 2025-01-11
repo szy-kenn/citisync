@@ -1,7 +1,7 @@
 {
-  "name": "[No Name]",
-  "short_name": "[No name]",
-  "description": "No description yet",
+  "name": "PharmaSis",
+  "short_name": "PharmaSis",
+  "description": "Find the best deals on your medications with our **PharmaSis** app! Compare prices from different pharmacies in real-time and always get the **lowest price**. It’s quick, easy, and helps you save money on your prescriptions. **Download now and start saving today!**",
   "background_color": "#fcfefc",
   "display": "standalone",
   "theme_color": "#fcfefc",

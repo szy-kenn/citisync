@@ -1,4 +1,44 @@
+"use client";
+
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+
+const InstallationPrompt = () => {
+
+  const installPromptBtnRef = useRef<HTMLButtonElement>(null);
+  const [isInstalled, setIsInstalled] = useState(false);
+  const deferredEvent = useRef<any>(null);
+
+  useEffect(() => {
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredEvent.current = e;
+      });
+
+      if (window.matchMedia('(display-mode: standalone)').matches) {
+        setIsInstalled(true);
+      }
+  }, []);
+
+  useEffect(() => {
+
+    if (installPromptBtnRef.current) {
+      installPromptBtnRef.current.addEventListener('click', () => {
+        if(deferredEvent) {
+          deferredEvent.current.prompt();
+        }
+      });
+    }
+
+  }, [installPromptBtnRef]);
+
+  return (
+    <div className={`fixed bottom-0 left-0 w-full flex items-center justify-between gap-8 px-4 py-2 bg-white text-black text-sm ${isInstalled ? 'hidden' : ''}`}> 
+      <p>For better experience, you can install this app on your device hehe</p>
+      <button ref={installPromptBtnRef} className="px-4 py-2 bg-black text-white">Install</button>
+    </div>
+  )
+}
 
 export default function Home() {
   return (
@@ -16,7 +56,7 @@ export default function Home() {
           <li className="mb-2">
             Get started by editing{" "}
             <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.js
+              app/page.tsx
             </code>
             .
           </li>
@@ -96,6 +136,7 @@ export default function Home() {
           Go to nextjs.org →
         </a>
       </footer>
+      <InstallationPrompt />
     </div>
   );
 }
