@@ -1,10 +1,12 @@
 'use client';
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { SectionDivider } from "@/components/ui/section-divider";
 import { useSignInWithGoogle, useSignInWithApple, useSignInWithFacebook } from "react-firebase-hooks/auth";
 import { auth } from "@/lib/firebase/firebaseConfig";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import Apple from '@/public/Apple.svg';
 import Facebook from '@/public/Facebook.svg';
@@ -55,9 +57,9 @@ export default function Login() {
                 <span className="text-slate-500 flex justify-end text-sm cursor-pointer">
                     Forgot Password?
                 </span>
-                <button className="text-white h-12 rounded-xl mt-2 bg-blue">
+                <Button className="text-white h-12 rounded-xl mt-2 bg-blue">
                     Log In
-                </button>
+                </Button>
             </div>
 
             <SectionDivider text="or" className="mt-8" />
@@ -90,9 +92,11 @@ export default function Login() {
             <div>
                 <p className="text-center mt-8 text-slate-500 text-sm">
                     Don't have an account? 
-                    <span className="text-blue-dark cursor-pointer underline ml-1">
-                        Sign Up
-                    </span>
+                    <Link href={'/auth/signup'}>
+                        <span className="text-blue-dark cursor-pointer underline ml-1">
+                            Sign Up
+                        </span>
+                    </Link>
                 </p>
             </div>
         </div>
