@@ -1,18 +1,22 @@
 import { db } from "./firebaseConfig";
 import { Post } from "@/lib/types";
-import {addDoc, collection, doc, getDoc, getDocs, setDoc, query, where, serverTimestamp } from "firebase/firestore";
+import {addDoc, collection, doc, getDoc, getDocs, setDoc, query, where, serverTimestamp, orderBy } from "firebase/firestore";
 import { Proposal } from "@/lib/types"; 
 import { formatTimestamp } from "../utils";
 
 export async function getAllPosts() {
     try {
         const postsCollection = collection(db, 'Posts');  // Get a reference to the 'Posts' collection
-        const snapshot = await getDocs(postsCollection);  // Get all documents in the collection
+
+        // Create a query with orderBy
+        const q = query(postsCollection, orderBy('createdAt', 'desc')); // 'desc' for newest first, 'asc' for oldest first
+
+        const snapshot = await getDocs(q);  // Get all documents in the collection
 
         const posts = snapshot.docs.map(doc => ({
             ...doc.data(),  // Spread the document data
             id: doc.id,
-            createdAt: doc.data().createdAt.toDate().toLocaleDateString(),
+            createdAt: doc.data().createdAt.toDate(),
         } as Post))
 
         return posts;
