@@ -43,145 +43,145 @@ const Page = () => {
       })
 
     const onSubmit = (values: any) => {
-        // addPost({
-        //     category: values.reportType,
-        //     content: values.description,
-        //     createdAt: serverTimestamp(),
-        //     likes: 0,
-        //     dislikes: 0,
-        //     feedback: [],
-        //     image_url: "",
-        //     isResolved: false,
-        //     location: values.location,
-        //     title: values.title,
-        //     user: "Anonymous",
-        //     userId: auth.currentUser?.uid,
-        // });
-        const dummyReports = [
-                {
-                  category: "Infrastructure",
-                  content: "Lubak na kalsada sa Maginhawa Street. Maraming motorsiklo at kotse ang nahihirapan dumaan. Mahigit 3 buwan na ganito ang kondisyon at hindi pa rin naaayos.",
-                  createdAt: serverTimestamp(),
-                  likes: 45,
-                  dislikes: 2,
-                  feedback: [
-                    "Same situation sa kabilang street",
-                    "Nagreport na ako sa barangay last week"
-                  ],
-                  image_url: "",
-                  isResolved: false,
-                  location: "Quezon City",
-                  title: "Damaged Road Needs Immediate Repair",
-                  user: "Anonymous",
-                  userId: "user123"
-                },
-                {
-                  category: "Health",
-                  content: "There's been an increase in dengue cases in our barangay. We need immediate fogging operations and clean-up drive. At least 5 cases reported this week alone.",
-                  createdAt: serverTimestamp(),
-                  likes: 89,
-                  dislikes: 0,
-                  feedback: [
-                    "My neighbor's child was also diagnosed yesterday",
-                    "We should organize a community clean-up"
-                  ],
-                  image_url: "",
-                  isResolved: false,
-                  location: "Parañaque",
-                  title: "Rising Dengue Cases in Brgy. Sun Valley",
-                  user: "Anonymous",
-                  userId: "user456"
-                },
-                {
-                  category: "Violence",
-                  content: "May nag-aaway na mga gang sa kanto tuwing gabi. Nagiging delikado na po ang situation lalo na sa mga estudyanteng pauwi ng gabi.",
-                  createdAt: serverTimestamp(),
-                  likes: 156,
-                  dislikes: 5,
-                  feedback: [
-                    "Nakita ko rin to kagabi",
-                    "Need more police patrol in the area"
-                  ],
-                  image_url: "",
-                  isResolved: false,
-                  location: "Manila",
-                  title: "Gang Violence in Sampaguita Street",
-                  user: "Anonymous",
-                  userId: "user789"
-                },
-                {
-                  category: "Education",
-                  content: "Our public elementary school needs more classrooms. Students are cramped in small rooms, some even having to share chairs. We need immediate attention from DepEd.",
-                  createdAt: serverTimestamp(),
-                  likes: 234,
-                  dislikes: 1,
-                  feedback: [
-                    "My child experiences this too",
-                    "We should write a formal petition"
-                  ],
-                  image_url: "",
-                  isResolved: false,
-                  location: "Caloocan",
-                  title: "Overcrowded Classrooms in Public School",
-                  user: "Anonymous",
-                  userId: "user101"
-                },
-                {
-                  category: "Environmental",
-                  content: "Grabe ang illegal dumping sa creek. Kapag bumabaha, lalong lumalalim dahil sa dumi. Kailangan ng regular cleanup at bantay para mahuli ang mga illegal dumpers.",
-                  createdAt: serverTimestamp(),
-                  likes: 67,
-                  dislikes: 3,
-                  feedback: [
-                    "Nakakita ako ng truck kagabi nagbababa ng basura",
-                    "Let's organize weekly cleanup drive"
-                  ],
-                  image_url: "",
-                  isResolved: false,
-                  location: "Marikina",
-                  title: "Illegal Dumping in Creek",
-                  user: "Anonymous",
-                  userId: "user202"
-                },
-                {
-                  category: "Public Services",
-                  content: "No water supply for 3 days now. Maynilad hasn't given any proper advisory. Many residents are struggling, especially the elderly.",
-                  createdAt: serverTimestamp(),
-                  likes: 321,
-                  dislikes: 4,
-                  feedback: [
-                    "Same situation in Block 5",
-                    "Called Maynilad hotline but no response"
-                  ],
-                  image_url: "",
-                  isResolved: false,
-                  location: "Parañaque",
-                  title: "Extended Water Service Interruption",
-                  user: "Anonymous",
-                  userId: "user303"
-                },
-                {
-                  category: "Transportation",
-                  content: "Kulang ang mga jeep sa umaga. Mahigit 1 oras na pila bago makasakay. Maraming late na sa trabaho at eskwela. Sana madagdagan ang units.",
-                  createdAt: serverTimestamp(),
-                  likes: 178,
-                  dislikes: 2,
-                  feedback: [
-                    "Everyday ganito sa terminal",
-                    "Need more transport options here"
-                  ],
-                  image_url: "",
-                  isResolved: false,
-                  location: "Quezon City",
-                  title: "Lack of Public Transportation",
-                  user: "Anonymous",
-                  userId: "user404"
-                }
-              ];
-
-        dummyReports.forEach(async report => {
-            await addPost(report);
+        addPost({
+            category: values.reportType,
+            content: values.description,
+            createdAt: serverTimestamp(),
+            likes: 0,
+            dislikes: 0,
+            feedback: [],
+            image_url: "",
+            isResolved: false,
+            location: values.location,
+            title: values.title,
+            user: "Anonymous",
+            userId: auth.currentUser?.uid,
         });
+        // const dummyReports = [
+        //         {
+        //           category: "Infrastructure",
+        //           content: "Lubak na kalsada sa Maginhawa Street. Maraming motorsiklo at kotse ang nahihirapan dumaan. Mahigit 3 buwan na ganito ang kondisyon at hindi pa rin naaayos.",
+        //           createdAt: serverTimestamp(),
+        //           likes: 45,
+        //           dislikes: 2,
+        //           feedback: [
+        //             "Same situation sa kabilang street",
+        //             "Nagreport na ako sa barangay last week"
+        //           ],
+        //           image_url: "",
+        //           isResolved: false,
+        //           location: "Quezon City",
+        //           title: "Damaged Road Needs Immediate Repair",
+        //           user: "Anonymous",
+        //           userId: "user123"
+        //         },
+        //         {
+        //           category: "Health",
+        //           content: "There's been an increase in dengue cases in our barangay. We need immediate fogging operations and clean-up drive. At least 5 cases reported this week alone.",
+        //           createdAt: serverTimestamp(),
+        //           likes: 89,
+        //           dislikes: 0,
+        //           feedback: [
+        //             "My neighbor's child was also diagnosed yesterday",
+        //             "We should organize a community clean-up"
+        //           ],
+        //           image_url: "",
+        //           isResolved: false,
+        //           location: "Parañaque",
+        //           title: "Rising Dengue Cases in Brgy. Sun Valley",
+        //           user: "Anonymous",
+        //           userId: "user456"
+        //         },
+        //         {
+        //           category: "Violence",
+        //           content: "May nag-aaway na mga gang sa kanto tuwing gabi. Nagiging delikado na po ang situation lalo na sa mga estudyanteng pauwi ng gabi.",
+        //           createdAt: serverTimestamp(),
+        //           likes: 156,
+        //           dislikes: 5,
+        //           feedback: [
+        //             "Nakita ko rin to kagabi",
+        //             "Need more police patrol in the area"
+        //           ],
+        //           image_url: "",
+        //           isResolved: false,
+        //           location: "Manila",
+        //           title: "Gang Violence in Sampaguita Street",
+        //           user: "Anonymous",
+        //           userId: "user789"
+        //         },
+        //         {
+        //           category: "Education",
+        //           content: "Our public elementary school needs more classrooms. Students are cramped in small rooms, some even having to share chairs. We need immediate attention from DepEd.",
+        //           createdAt: serverTimestamp(),
+        //           likes: 234,
+        //           dislikes: 1,
+        //           feedback: [
+        //             "My child experiences this too",
+        //             "We should write a formal petition"
+        //           ],
+        //           image_url: "",
+        //           isResolved: false,
+        //           location: "Caloocan",
+        //           title: "Overcrowded Classrooms in Public School",
+        //           user: "Anonymous",
+        //           userId: "user101"
+        //         },
+        //         {
+        //           category: "Environmental",
+        //           content: "Grabe ang illegal dumping sa creek. Kapag bumabaha, lalong lumalalim dahil sa dumi. Kailangan ng regular cleanup at bantay para mahuli ang mga illegal dumpers.",
+        //           createdAt: serverTimestamp(),
+        //           likes: 67,
+        //           dislikes: 3,
+        //           feedback: [
+        //             "Nakakita ako ng truck kagabi nagbababa ng basura",
+        //             "Let's organize weekly cleanup drive"
+        //           ],
+        //           image_url: "",
+        //           isResolved: false,
+        //           location: "Marikina",
+        //           title: "Illegal Dumping in Creek",
+        //           user: "Anonymous",
+        //           userId: "user202"
+        //         },
+        //         {
+        //           category: "Public Services",
+        //           content: "No water supply for 3 days now. Maynilad hasn't given any proper advisory. Many residents are struggling, especially the elderly.",
+        //           createdAt: serverTimestamp(),
+        //           likes: 321,
+        //           dislikes: 4,
+        //           feedback: [
+        //             "Same situation in Block 5",
+        //             "Called Maynilad hotline but no response"
+        //           ],
+        //           image_url: "",
+        //           isResolved: false,
+        //           location: "Parañaque",
+        //           title: "Extended Water Service Interruption",
+        //           user: "Anonymous",
+        //           userId: "user303"
+        //         },
+        //         {
+        //           category: "Transportation",
+        //           content: "Kulang ang mga jeep sa umaga. Mahigit 1 oras na pila bago makasakay. Maraming late na sa trabaho at eskwela. Sana madagdagan ang units.",
+        //           createdAt: serverTimestamp(),
+        //           likes: 178,
+        //           dislikes: 2,
+        //           feedback: [
+        //             "Everyday ganito sa terminal",
+        //             "Need more transport options here"
+        //           ],
+        //           image_url: "",
+        //           isResolved: false,
+        //           location: "Quezon City",
+        //           title: "Lack of Public Transportation",
+        //           user: "Anonymous",
+        //           userId: "user404"
+        //         }
+        //       ];
+
+        // dummyReports.forEach(async report => {
+        //     await addPost(report);
+        // });
         redirect("/feed");
     };
 
