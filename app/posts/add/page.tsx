@@ -57,7 +57,7 @@ const Page = () => {
             user: "Anonymous",
             userId: auth.currentUser?.uid,
         });
-        redirect("/feed/unresolved");
+        redirect("/feed");
     };
 
   return (
