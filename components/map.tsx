@@ -1,6 +1,5 @@
 "use client";
 
-// components/Map.js
 import React, { useEffect, useState } from 'react';
 import { GoogleMap, InfoWindow, LoadScript, Marker, Polygon } from '@react-google-maps/api';
 import { MarkerType } from '@/lib/utils';
@@ -18,17 +17,11 @@ const defaultCenter = {
   lng: 120.9842, // Manila Longitude
 };
 
-const Map = ({ markers } 
-  : {
-    markers: MarkerType[], 
-    }) => {
-
-      
-  const [selectedMarker, setSelectedMarker] = useState<MarkerType>(); // State to store selected marker
-  const [showInfoWindow, setShowInfoWindow] = useState<boolean>(false); // State to control popup visibility
-
+const Map = ({ markers }: { markers: MarkerType[] }) => {
+  const [selectedMarker, setSelectedMarker] = useState<MarkerType>(); 
+  const [showInfoWindow, setShowInfoWindow] = useState<boolean>(false);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [posts, setPosts] = useState<Post[] | undefined>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
 
   const handleLoad = () => {
     setIsLoaded(true);
@@ -36,47 +29,100 @@ const Map = ({ markers }
 
   const handleMarkerClick = async (marker: MarkerType) => {
     setSelectedMarker(marker);
-    setShowInfoWindow(true); // Show the popup when the marker is clicked
-    const posts = await getAllPosts();
-    setPosts(posts);
+    setShowInfoWindow(true);
+    try {
+      const fetchedPosts = await getAllPosts();
+      setPosts(fetchedPosts || []);
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+      setPosts([]);
+    }
   };
 
+  // Filter out invalid markers
+  const validMarkers = React.useMemo(() => 
+    markers.filter(marker => 
+      marker?.position && 
+      typeof marker.position.lat === 'number' && 
+      typeof marker.position.lng === 'number'
+    ),
+    [markers]
+  );
+
+  // Generate map key only from valid markers
+  const mapKey = React.useMemo(() => 
+    validMarkers
+      .map(m => `${m.id}-${m.position.lat}-${m.position.lng}`)
+      .join('-'),
+    [validMarkers]
+  );
+
+  // If no valid markers, use default center
+  const mapCenter = React.useMemo(() => {
+    if (validMarkers.length === 0) return defaultCenter;
+    
+    // Calculate center from valid markers
+    const lats = validMarkers.map(m => m.position.lat);
+    const lngs = validMarkers.map(m => m.position.lng);
+    
+    return {
+      lat: (Math.min(...lats) + Math.max(...lats)) / 2,
+      lng: (Math.min(...lngs) + Math.max(...lngs)) / 2
+    };
+  }, [validMarkers]);
+
+  if (!markers || markers.length === 0) {
+    return (
+      <div className="w-full h-[300px] flex items-center justify-center bg-gray-100">
+        No locations to display
+      </div>
+    );
+  }
+
   return (
-      <LoadScript
-        googleMapsApiKey={process.env.NEXT_PUBLIC_GMAPS_API_KEY!} // API Key from environment variables
-        onLoad={handleLoad}
-      >
+    <LoadScript
+      googleMapsApiKey={process.env.NEXT_PUBLIC_GMAPS_API_KEY!}
+      onLoad={handleLoad}
+    >
       {isLoaded && (
         <GoogleMap
-        key={markers.toLocaleString()}
           mapContainerStyle={containerStyle}
-          center={defaultCenter}
+          center={mapCenter}
           zoom={12}
+          key={mapKey}
         >
-        {markers.map((marker) => (
-          <Marker
-            key={marker.id}
-            position={marker.position}
-            title={marker.title}
-            icon={'/images/category-icons/pin.svg'}
-            onClick={() => handleMarkerClick(marker)}
-          />
-        ))}
+          {validMarkers.map((marker) => (
+            marker?.position && (
+              <Marker
+                key={`marker-${marker.id}`}
+                position={marker.position}
+                title={marker.title}
+                icon={'/images/category-icons/pin.svg'}
+                onClick={() => handleMarkerClick(marker)}
+              />
+            )
+          ))}
 
-        {/* InfoWindow (Popup) */}
-        {showInfoWindow && selectedMarker && (
-          <InfoWindow
-            position={selectedMarker.position}
-            onCloseClick={() => setShowInfoWindow(false)} // Close the popup when clicking the close button
-          >
-            <div className='flex gap-3 flex-col w-80'>
-                {posts?.map((post: Post) => (
-                  <PostCard key={post.id} post={post} isShortened={true} />
-                ))}
-            </div>
-          </InfoWindow>
-        )}
-
+          {showInfoWindow && selectedMarker?.position && (
+            <InfoWindow
+              position={selectedMarker.position}
+              onCloseClick={() => setShowInfoWindow(false)}
+            >
+              <div className='flex gap-3 flex-col w-80'>
+                {posts && posts.length > 0 ? (
+                  posts.map((post) => (
+                    <PostCard 
+                      key={`post-${post.id}-${selectedMarker.id}`}
+                      post={post}
+                      isShortened={true}
+                    />
+                  ))
+                ) : (
+                  <div>No posts available</div>
+                )}
+              </div>
+            </InfoWindow>
+          )}
         </GoogleMap>
       )}
     </LoadScript>
