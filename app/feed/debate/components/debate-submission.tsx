@@ -34,7 +34,7 @@ export function DebateSubmissionForm() {
 
   async function onSubmit(data: ProposalFormValues) {
     if (!user) {
-      toast.error('You must be logged in to submit a proposal')
+      toast.error('You must be logged in to submit a debate')
       return
     }
 
@@ -43,13 +43,13 @@ export function DebateSubmissionForm() {
       const result = await submitProposal(data, user, username)
 
       if (result.success) {
-        toast.success('Proposal submitted successfully')
+        toast.success('Debate submitted successfully')
         form.reset()
       } else {
-        toast.error(result.error || 'Failed to submit proposal')
+        toast.error(result.error || 'Failed to submit debate')
       }
     } catch (error) {
-      console.error("Error submitting proposal:", error)
+      console.error("Error submitting debate:", error)
       toast.error('An unexpected error occurred')
     } finally {
       setIsSubmitting(false)
@@ -59,7 +59,7 @@ export function DebateSubmissionForm() {
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle>Submit a New Proposal</CardTitle>
+        <CardTitle>Submit a New Debate</CardTitle>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -69,12 +69,12 @@ export function DebateSubmissionForm() {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Proposal Title</FormLabel>
+                  <FormLabel>Debate Title</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter the title of your proposal" {...field} />
+                    <Input placeholder="Enter the title of your debate" {...field} />
                   </FormControl>
                   <FormDescription>
-                    Provide a clear and concise title for your proposal.
+                    Provide a clear and concise title for your debate.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -85,7 +85,7 @@ export function DebateSubmissionForm() {
               name="content"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Proposal Content</FormLabel>
+                  <FormLabel>Debate Content</FormLabel>
                   <FormControl>
                     <Textarea 
                       placeholder="Describe your proposal in detail" 
@@ -94,7 +94,7 @@ export function DebateSubmissionForm() {
                     />
                   </FormControl>
                   <FormDescription>
-                    Explain your proposal, its benefits, and any implementation details.
+                    Explain your debate, its benefits, and any implementation details.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>

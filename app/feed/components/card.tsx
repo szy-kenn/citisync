@@ -69,9 +69,9 @@ export default function PostCard({ post, isShortened = false }: PostCardProps) {
         </CardContent>
         <CardFooter className="flex items-center justify-between text-sm text-muted-foreground">
           <LikeDislikeCounter initialLikes={post.likes} />
-          <div className="flex items-center space-x-1">
+          <div className="flex items-center justify-end gap-0.5">
             <MapPin className="h-4 w-4" />
-            <span>{post.location}</span>
+            <span className="text-xs text-right">{post.location}</span>
           </div>
         </CardFooter>
       </Link>

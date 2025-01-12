@@ -16,7 +16,7 @@ export default function BottomBar() {
                 <Link href={"/feed"}>
                     <BsHouseDoor />
                 </Link>
-                <Link href={"/leaderboards"}>
+                <Link href={"/feed/leaderboard"}>
                     <BsBarChart />
                 </Link>
                 <Link href={"/posts/add"}>

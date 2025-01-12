@@ -84,7 +84,8 @@ const Post = async ({ params }: {params: {id: string}}) => {
           <div className='flex flex-col'>
             <p className='font-bold'>Feedback</p>
             <div>
-                {post.feedback.map((feedback, index) => (
+                {post.feedback.length === 0 ? <p>No feedback yet</p> :
+                (post.feedback.map((feedback, index) => (
                     <Card key={index} className="p-4 space-y-4">
                         <div className='flex gap-4 items-center'>
                             <Avatar>
@@ -94,7 +95,7 @@ const Post = async ({ params }: {params: {id: string}}) => {
                         </div>
                         <p className='text-sm'>{feedback.content}</p>
                     </Card>
-                ))}
+                )))}
             </div>
           </div>
         </div>

@@ -58,7 +58,7 @@ useEffect(() => {
             <DebateDetails {...debate.find(p => p.id === selectedDebate)!} />
           </>
         )}
-          <Link href={"/feed/proposal/add"}>
+          <Link href={"/feed/debate/add"}>
               <div className='bg-gradient-to-b from-[#2F3269] to-[#5D63CF] h-14 aspect-square text-white fixed bottom-14 right-0 p-2 flex justify-center items-center text-4xl rounded-full m-4'>
                   <BsPlus />
               </div>
