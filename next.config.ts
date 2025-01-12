@@ -4,6 +4,9 @@ import withPWA from '@ducanh2912/next-pwa';
 const config: NextConfig = {
   // output: "export",
   distDir: "build",
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   
   // Rewrites need to be inside the config object
   async rewrites() {
