@@ -23,7 +23,7 @@ const config: NextConfig = {
 const pwaConfig = withPWA({
   dest: "public",
   register: true,
-  disable: process.env.NODE_ENV === 'development'
+  // disable: process.env.NODE_ENV === 'development'
 });
 
 // Export the configured Next.js config
