@@ -3,7 +3,7 @@ import withPWA from '@ducanh2912/next-pwa';
 
 const config: NextConfig = {
   // output: "export",
-  distDir: "build",
+  // distDir: "build",
   typescript: {
     ignoreBuildErrors: true,
   },
