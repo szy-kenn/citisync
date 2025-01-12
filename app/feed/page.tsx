@@ -2,6 +2,8 @@ import { getAllPosts } from "@/lib/firebase/posts";
 import { Post } from "@/lib/types";
 import PostCard from "./components/card";
 
+export const dynamic = 'force-dynamic';
+
 export default async function ResolvedPost() {
   
   const posts = await getAllPosts();

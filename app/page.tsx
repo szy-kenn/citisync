@@ -4,6 +4,8 @@ import { redirect } from "next/navigation";
 import Map from "@/components/map";
 import { MarkerType } from "@/lib/utils";
 
+export const dynamic = 'force-dynamic';
+
 export default function Page() {
 
   return (
